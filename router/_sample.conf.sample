@@ -1,0 +1,70 @@
+SRV=
+OS=
+
+# true|false
+PKG[BRIDGE]=
+PKG[L2TP]=
+PKG[NETINTERFACES]=
+PKG[NETPLAN]=
+PKG[WIREGUARD]=
+
+# dhcp|static|manual
+NIC[1_MODE]=
+NIC[1_IF]=
+NIC[1_IP]=
+NIC[1_NM]=
+NIC[1_GW]=
+NIC[1_DNS]=
+# true|false
+NIC[1_NAT]=
+
+# dhcp|static|manual
+NIC[2_MODE]=
+NIC[2_IF]=
+NIC[2_IP]=
+NIC[2_NM]=
+NIC[2_GW]=
+NIC[2_DNS]=
+# true|false
+NIC[2_NAT]=
+
+# bridge
+# dhcp|static|manual
+BR[1_MODE]=
+BR[1_IF]=br0
+BR[1_IP]=
+BR[1_NM]=
+BR[1_GW]=
+BR[1_DNS]=
+BR[1_PREUP]=
+BR[1_PORTS]=
+
+# Wireguard
+WG_IF=
+WG_ADDR=
+WG_PORT=
+WG_KEY_PRI=
+WG_KEY_PUB=
+WG_ALLOWED_IP=
+WG_ENDPOINT=
+
+# l2tp
+L2TP[1_IF]=l2tpeth0
+L2TP[1_TID]=5000
+L2TP[1_PTID]=5000
+L2TP[1_ADDRL]=10.10.0.1
+L2TP[1_ADDRR]=10.10.0.2
+L2TP[1_SPORT]=5000
+L2TP[1_DPORT]=5000
+L2TP[1_SID]=5000
+L2TP[1_PSID]=5000
+
+# L2TP[2_IF]=l2tpeth1
+# L2TP[2_TID]=5001
+# L2TP[2_PTID]=5001
+# L2TP[2_ADDRL]=192.168.10.1
+# L2TP[2_ADDRR]=192.168.10.2
+# L2TP[2_SPORT]=5001
+# L2TP[2_DPORT]=5001
+# L2TP[2_SID]=5001
+# L2TP[2_PSID]=5001
