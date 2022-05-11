@@ -18,12 +18,21 @@ declare -A PKG
 DIR_BASE=$(dirname "$0")
 DIR_OUT=${DIR_BASE}/out
 DIR_SRC=${DIR_BASE}/src
-MY_CONF=${DIR_BASE}/$(basename -s .sh "$0").conf.sample
+DIR_CONF=${DIR_BASE}/router
+CONF_DEFAULT=${DIR_BASE}/router.conf
+CONF_ROUTER=${DIR_BASE}/$(basename -s .sh "$0").conf.sample
 SRV=''
 
 cmd_exe() {
 	echo "cmd: ${@}"
 	${@}
+}
+
+__check_fail() {
+	if [ "$1" != 0 ] && [ "$1" != '' ]; then
+		echo ${1}
+		exit 1
+	fi
 }
 
 __install_alpine() {
@@ -66,12 +75,20 @@ __install() {
 	__install_${OS}
 }
 
-__config_load() {
+__load_default() {
+	if [ ! -f ${CONF_DEFAULT} ]; then
+		cp ${CONF_DEFAULT}.default ${CONF_DEFAULT}
+	fi
+	. ${CONF_DEFAULT}
+	echo Loaded ${CONF_DEFAULT}
+}
+
+__load_router() {
 	if [ -f ${1} ]; then
 		. ${1}
 		echo Loaded ${1}
 	else
-		cp ${MY_CONF} ${1}
+		cp ${CONF_ROUTER} ${1}
 		echo "Please fill in ${1}"
 	fi
 }
@@ -216,24 +233,21 @@ __config_wireguard() {
 }
 
 __dir_prep() {
-	_r=${1}
 	if [ "${SRV}" != '' ]; then
-		_d=${DIR_OUT}/${SRV}
+		local _d=${DIR_OUT}/${SRV}
 		rm -rf ${_d}
 		mkdir -p ${_d}
 		cp -r ${DIR_SRC}/* ${_d}/
+	else
+		echo 'SRV not set.'
 	fi
-}
-
-__dir_copy() {
-	echo
 }
 
 # $1: config file
 main() {
-	_f=${1}
-	__config_load ${_f}
-	__dir_prep ${R_NUM}
+	local _router=${1}
+	__load_router ${_router}
+	__dir_prep
 
 	for p in L2TP NETINTERFACES NETPLAN WIREGUARD; do
 		if [ "${PKG[${p}]}" == 'true' ]; then
@@ -244,6 +258,7 @@ main() {
 	__install
 }
 
+__load_default
 for i in ${@}; do
 	cmd_exe main ${i}
 done

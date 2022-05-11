@@ -1,0 +1,12 @@
+# L2TP default
+
+#  default L2TP interface prefix
+DEFAULT_L2TP_IFPREFIX=l2tpeth
+#  default L2TP number for L2TP[*_TID|PTID|ADDRL|ADDRR|SPORT|DPORT|SID|PSID]
+#  Auto increase by 1 for each additional L2TP interface in router/<router>.conf
+DEFAULT_L2TP_NUMBER=5000
+
+# Wireguard default
+
+#  default Wireguard port if not provided in router/<router>.conf
+DEFAULT_WG_PORT=4000
